@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+  redis:
+    restart: always
+    image: sameersbn/redis:latest
+    command:
+    - --loglevel warning
+    volumes:
+    - /srv/docker/gitlab/redis:/var/lib/redis
+
+  postgresql:
+    restart: always
+    image: sameersbn/postgresql:9.4-22
+    volumes:
+    - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+    environment:
+    - DB_USER=gitlab
+    - DB_PASS=password
+    - DB_NAME=gitlabhq_production
+    - DB_EXTENSION=pg_trgm
+
+  gitlab:
+    restart: always
+    image: sameersbn/gitlab:8.9.6
+    depends_on:
+    - redis
+    - postgresql
+    ports:
+    - "10080:80"
+    - "10022:22"
+    volumes:
+    - /srv/docker/gitlab/gitlab:/home/git/data
+    environment:
+    - DEBUG=false
+    - DB_ADAPTER=postgresql
+    - DB_HOST=postgresql
+    - DB_PORT=5432
+    - DB_USER=gitlab
+    - DB_PASS=password
+    - DB_NAME=gitlabhq_production
+
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+
+    - TZ=Asia/Shanghai
+    - GITLAB_TIMEZONE=Shanghai
+
+    - GITLAB_HTTPS=false
+    - SSL_SELF_SIGNED=false
+
+    - GITLAB_HOST=localhost
+    - GITLAB_PORT=10080
+    - GITLAB_SSH_PORT=10022
+
+    - GITLAB_EMAIL=admin@shengyisoft.com
+    - GITLAB_EMAIL_REPLY_TO=admin@shengyisoft.com
+    - GITLAB_INCOMING_EMAIL_ADDRESS=admin@shengyisoft.com
+
+    - GITLAB_BACKUP_SCHEDULE=daily
+    - GITLAB_BACKUP_TIME=03:00
+
+    - SMTP_ENABLED=true
+    - SMTP_DOMAIN=smtp.exmail.qq.com
+    - SMTP_HOST=smtp.exmail.qq.com
+    - SMTP_PORT=465
+    - SMTP_USER=admin@shengyisoft.com
+    - SMTP_PASS=4f3c445dfa
+    - SMTP_STARTTLS=true
+    - SMTP_AUTHENTICATION=login
