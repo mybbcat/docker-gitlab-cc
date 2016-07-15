@@ -1,7 +1,4 @@
-version: '2'
-
-services:
-  redis:
+  redis-for-gitlab:
     restart: always
     image: sameersbn/redis:latest
     command:
@@ -9,7 +6,7 @@ services:
     volumes:
     - /srv/docker/gitlab/redis:/var/lib/redis
 
-  postgresql:
+  postgresql-for-gitlab:  
     restart: always
     image: sameersbn/postgresql:9.4-22
     volumes:
@@ -23,9 +20,9 @@ services:
   gitlab:
     restart: always
     image: sameersbn/gitlab:8.9.6
-    depends_on:
-    - redis
-    - postgresql
+    links:
+    - redis-for-gitlab:redisio
+    - postgresql-for-gitlab:postgresql
     ports:
     - "10080:80"
     - "10022:22"
@@ -50,7 +47,7 @@ services:
     - SMTP_HOST=smtp.exmail.qq.com
     - SMTP_PORT=465
     - SMTP_USER=admin@shengyisoft.com
-    - SMTP_PASS=******
+    - SMTP_PASS=*****
     - SMTP_STARTTLS=true
     - SMTP_AUTHENTICATION=login
     - GITLAB_SECRETS_DB_KEY_BASE=Eatievomog3ucahjaivahfaigeiphahc
