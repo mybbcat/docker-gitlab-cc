@@ -16,7 +16,7 @@ gitlab-mysql:
   - DB_PASS=gitlabpaw
   - DB_NAME=gitlabhq_production
 gitlab:
-  image: index.docker.io/sameersbn/gitlab:7.14.1
+  image: index.docker.io/sameersbn/gitlab:8.9.6-1
   restart: always
   links:
   - gitlab-redis:redisio
@@ -31,18 +31,19 @@ gitlab:
   - GITLAB_SSH_PORT=22
   - GITLAB_PORT=80
   - SMTP_HOST=smtp.exmail.qq.com
-  - SSL_SELF_SIGNED=false
+  - SSL_SELF_SIGNED=true
   - TZ=Asia/Shanghai
   - GITLAB_HOST=git.inner.shengyisoft.com
   - GITLAB_HTTPS=false
   - SMTP_PORT=465
   - SMTP_USER=admin@shengyisoft.com
+  - GITLAB_EMAIL_DISPLAY_NAME=gitlab_nopley
   - GITLAB_BACKUP_SCHEDULE=daily
   - SMTP_TLS=true
   - SMTP_STARTTLS=true
   - GITLAB_EMAIL_REPLY_TO=admin@shengyisoft.com
   - SMTP_AUTHENTICATION=login
-  - NGINX_MAX_UPLOAD_SIZE=50m
+  - NGINX_MAX_UPLOAD_SIZE=100m
   - GITLAB_TIMEZONE=Beijing
   - DEBUG=false
   - GITLAB_EMAIL=admin@shengyisoft.com
@@ -50,3 +51,6 @@ gitlab:
   - GITLAB_BACKUP_TIME=03:00
   - SMTP_ENABLED=true
   - SMTP_PASS=4f3c445dfa
+  - GITLAB_GRAVATAR_ENABLED=true
+  - GITLAB_GRAVATAR_HTTP_URL=http://gravatar.duoshuo.com/avatar/%{hash}?s=%{size}&d=identicon
+  - GITLAB_GRAVATAR_HTTPS_URL= 
