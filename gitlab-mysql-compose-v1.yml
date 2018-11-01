@@ -5,7 +5,7 @@ gitlab-redis:
   volumes:
   - /mnt/diskb/docker/gitlab/redis:/var/lib/redis
 gitlab-mysql:
-  image: index.docker.io/sameersbn/mysql:latest
+  image: index.docker.io/sameersbn/mysql:5.7.22
   restart: always
   ports:
   - 32777:3306
@@ -16,7 +16,7 @@ gitlab-mysql:
   - DB_PASS=gitlabpaw
   - DB_NAME=gitlabhq_production
 gitlab:
-  image: index.docker.io/sameersbn/gitlab:9.3.5
+  image: index.docker.io/sameersbn/gitlab:9.5.0
   restart: always
   links:
   - gitlab-redis:redisio
@@ -28,30 +28,32 @@ gitlab:
   - /mnt/diskb/docker/gitlab/gitlab:/home/git/data
   environment:
   - GITLAB_SECRETS_DB_KEY_BASE=Eatievomog3ucahjaivahfaigeiphahc
-  - GITLAB_SECRETS_SECRET_KEY_BASE=Eatievomog3ucahjaivahfaigeiphahc
-  - GITLAB_SECRETS_OTP_KEY_BASE=Eatievomog3ucahjaivahfaigeiphahc
   - GITLAB_SSH_PORT=10023
   - GITLAB_PORT=80
   - SMTP_HOST=smtp.exmail.qq.com
+  - GITLAB_EMAIL_ENABLED=true
+  - GITLAB_SECRETS_JWS_PRIVATE_KEY=MIIEowIBAAKCAQEAxvdq44BhdefuoU6zRTMmhc5ciuAoUZfx/MqLrZZsVE8s2yoLeHvUvOEcBQs/vk1XMtomPMLu7mdqaPmbFI0t7zJYyPuFppt0ttVFktCgu0JigJlFUZ8MDLjHTET3DFLYSvFzXFkWAW1pSad7SoUDAgJcwTw0czN/LZgBlIx1eQOKLqp5OndpSpglARBTQNUzF1AoFPCmpsme4fxdybn5HzusxLHx3BQ6nxGY5faMq/2bB++LIf5Ov5ERdmoKsMPKzJ3OLzavBXhVYlz760xX+MnyCWURP1RGPw19UGoLm1LcjuyKYT/jvJX6jN94Dz/RqMPpioS2bYwWjGp3mJ+bAwIDAQABAoIBADHNNEAFnl940k4l+NFVYEsVwCwyt2TU94ki2Zt1j1/7AWtKNtzNgg5U+kJ48leb3DuqRu/miw+5avUjpSGbxOeeXoLQEkAFoU0yTNvWxKSalTVDKAqqGMYGajw49u1qvyDjFtECq3NoA3agKUgZywrxtG3Zt/ct6KNs7NhV4AGN5Av2ZvMkknpi2yOw4+v/5A5Lnp7eUT30Xopk7YKty5pF1Ffcs5PaRkxO88GCsC7sQk8/AtmsbYf3gYaiZEhS+Mm93k/FG8gABz2f
+    HCBvNB+iW+LhX1z5X3FxumKezZ2CBfQy3elBvFRf+dQBqnl/dvMxYl8mpXnV3Kzb+ecncKECgYEA8NqFYQ8ci/y2OVxYASdrJFEsD9JKu7kE1GJLctVF3J1X38nhNxUepAxALN39XdBy84lLRlOcKQeK2xN8lfl6Dv9kXEMhIy+2UHcY2yWylohaEmJ6n39Hm52Sqg2T5jgiIqTalRpreHkHwJJnCUXKRGKiIr3G3WVjUDSQpVTTWv8CgYEA03qPS1UvtE7cR03jVjSSUfhlsBk/Gp3HV7iBSjhBsyKL3f67U7TzzocAHS7DSOzzcdFlICcZT6lWp0cWfDoT2DF/e9Jv4WaVhdxfYUNFKaSFqsJ8ywrCYC16ZBQv+GADKk4PbaC5vUF9plitBG4KXPqYC5UbKV0g3sVVALjCU/0CgYALWjFpNr4gtwObxod7XnFFX/IUuNO+72ST4iIuQnEtidkHekt8PimYj99CfiAgGOAiLHl40h4NLQbVdqCrrPuc01rWom9gajJMrqBkS+2T/M9KCIxBEk28vvuXulYbRtANE/odhwZDwmikIgJrRHfZK1D7FDjYXJwGvsOGl23y3wKBgBm5etzLC/Z+8USrMNA3rOTTtmrpZ0exkaIWC4Qfu74yoZjrd5YDGPUybs0d9xtT13ks44Q5vVZ3XtcSSqXp2qgdvUgunPVqKR4TZHbMXAlovem7prp8IJDad1zdJ8iqxTfMLwxC1NU0tjgZ6VH0oMYWpZAjHx60+V6f2mswDlNxAoGBAIBYUyg0vN4PuhgXuKx2DkHtg0qgd+2ochgVcEhV1otxiq7V2z8OpW+DPgEVdUCFKx+7wefLdHrS6AMPBr7xASc5LSj/FMr7nyvWF9EidaFtUBhhkAOAIMCQ9JXILUCi4YYA66hHwffjpxjClQnD5hG5L4lFWfLlaidHLivFqatG
   - SSL_SELF_SIGNED=true
   - TZ=Asia/Shanghai
   - GITLAB_HOST=git.inner.shengyisoft.com
   - GITLAB_HTTPS=false
   - SMTP_PORT=465
   - SMTP_USER=admin@shengyisoft.com
-  - GITLAB_BACKUP_SCHEDULE=daily
+  - GITLAB_BACKUP_SCHEDULE=disable
   - SMTP_TLS=true
   - SMTP_STARTTLS=true
   - GITLAB_EMAIL_REPLY_TO=admin@shengyisoft.com
   - SMTP_AUTHENTICATION=login
+  - GITLAB_SECRETS_OTP_KEY_BASE=Eatievomog3ucahjaivahfaigeiphahc
   - GITLAB_GRAVATAR_ENABLED=true
   - NGINX_MAX_UPLOAD_SIZE=100m
   - GITLAB_TIMEZONE=Beijing
-  - DEBUG=
   - GITLAB_EMAIL=admin@shengyisoft.com
   - SMTP_DOMAIN=smtp.exmail.qq.com
   - GITLAB_BACKUP_TIME=03:00
   - SMTP_ENABLED=true
-  - GITLAB_GRAVATAR_HTTP_URL=http://gravatar.duoshuo.com/avatar/%{hash}?s=%{size}&d=identicon
+  - GITLAB_SECRETS_SECRET_KEY_BASE=Eatievomog3ucahjaivahfaigeiphahc
+  - GITLAB_GRAVATAR_HTTP_URL=https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon
   - GITLAB_EMAIL_DISPLAY_NAME=gitlab
-  - SMTP_PASS=9pFQDGmw
+  - SMTP_PASS=mptidnygLDYU22eP
